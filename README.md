@@ -30,7 +30,7 @@ flashcard-app/
   docker-compose.yml   Postgres + API containers
 ```
 
-## Option A: Run with Docker (recommended, matches your portfolio site setup)
+## Running with Docker:
 
 ```bash
 cd flashcard-app
@@ -39,7 +39,7 @@ docker compose up --build
 
 This starts Postgres (seeded with schema.sql automatically) and the API on port 4000.
 
-Then run the frontend separately (Vite dev server isn't in Docker here, so hot reload stays fast):
+Then run the frontend separately:
 
 ```bash
 cd frontend
@@ -49,7 +49,7 @@ npm run dev
 
 Visit http://localhost:5173. Vite's dev server proxies `/api` calls to `localhost:4000` (see `vite.config.js`).
 
-## Option B: Run without Docker
+## Running without Docker:
 
 1. Install Postgres locally, create a database:
    ```bash
@@ -59,7 +59,7 @@ Visit http://localhost:5173. Vite's dev server proxies `/api` calls to `localhos
 2. Backend:
    ```bash
    cd backend
-   cp .env.example .env   # edit if your Postgres credentials differ
+   cp .env.example .env
    npm install
    npm run dev
    ```
@@ -82,9 +82,8 @@ docker compose exec -T db psql -U postgres -d netplus_flashcards -f - < backend/
 
 If you'd rather start fresh instead, `docker compose down -v` wipes the volume so `schema.sql` (which now includes the progress table) runs again from scratch on next `up`.
 
-## Next steps to build on this scaffold
+## To do:
 
-- **Add a deck/card editor UI** — currently decks and cards can only be created via the API (e.g. with `curl` or Postman); a form in React would let you manage content without leaving the browser.
-- **Spaced repetition** — the `card_reviews` table already logs pass/fail per card. You could implement something like the SM-2 algorithm to resurface cards you've failed more often.
-- **Auth** — if you want to deploy this publicly and track your own progress separately from anyone else using it, add a `users` table and basic session/JWT auth.
-- **Deploy** — Render or Railway both support a Postgres + Node service for free/cheap; point your portfolio site at the deployed URL as a live project link.
+- **Add a deck/card editor UI** — decks and cards can only be created via the API (e.g. with `curl` or Postman); form in React --> manage content without leaving the browser.
+- **Spaced repetition** — the `card_reviews` table already logs pass/fail per card --> implement something like SM-2 algorithm to resurface cards that were failed more often.
+- **Auth** — if ever publicly deployed, --> track own progress separately from anyone else, add `users` table and basic session authorization.
