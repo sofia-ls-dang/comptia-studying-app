@@ -70,18 +70,6 @@ Visit http://localhost:5173. Vite's dev server proxies `/api` calls to `localhos
    npm run dev
    ```
 
-## Updating an existing database (XP/creature feature)
-
-If you already ran `docker compose up` before and have decks/cards in your database, the new `progress` table won't exist yet (Docker only auto-runs `schema.sql` on a brand-new, empty database volume). Run the migration once:
-
-```bash
-docker compose exec -T db psql -U postgres -d netplus_flashcards -f - < backend/db/migration_001_add_progress.sql
-```
-
-(Or, without Docker: `psql -d netplus_flashcards -f backend/db/migration_001_add_progress.sql`)
-
-If you'd rather start fresh instead, `docker compose down -v` wipes the volume so `schema.sql` (which now includes the progress table) runs again from scratch on next `up`.
-
 ## To do:
 
 - **Add a deck/card editor UI** — decks and cards can only be created via the API (e.g. with `curl` or Postman); form in React --> manage content without leaving the browser.
